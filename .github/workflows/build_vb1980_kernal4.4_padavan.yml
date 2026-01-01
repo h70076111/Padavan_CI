@@ -39,6 +39,8 @@ on:
         - Netgear_R6800
         - Netgear_R7450
         - Nokia-Sbell_A-040W-Q
+        - NX18N
+        - NX18NNW
         - Phicomm_K2P
         - Phicomm_K2P-NANO
         - Phicomm_K2P-USB
@@ -66,11 +68,12 @@ on:
         - ZTE_E8820V2
         - ZTE_E8820S
         - ZTT_RX6000
+        - ZX8800NS
         default: SIM_AX1800T
       plugins:
         description: 'json format string of include configs'
         required: true
-        default: '{"vpnsvr":"n","vpncli":"n","vpncmd":"n","ss":"y","v2ray":"n","xray":"y","trojan":"y","ssobfs":"y","dnsforwarder":"n","adbyby":"n","adguardhome":"n","smartdns":"n","aliddns":"n","zerotier":"n","ddnsto":"n","wireguard":"n","frpc":"y","aldrive":"n","sqm":"y","mentohust":"n","scutclient":"n","njitclient":"n","minieap":"n","dogcom":"n"}'
+        default: '{"vpnsvr":"n","vpncli":"n","vpncmd":"n","hxcli":"y","nelink":"n","ntwon":"y","etinkn":"y","bafa":"y","dnsforwarder":"n","adbyby":"n","adguardhome":"n","smartdns":"n","aliddns":"n","zerotier":"y","ddnsto":"n","wireguard":"n","frpc":"n","aldrive":"n","sqm":"n","mentohust":"n","scutclient":"n","njitclient":"n","minieap":"n","dogcom":"n"}'
       usexraymin:
         type: boolean
         description: 'use streamlined xray'
@@ -78,7 +81,7 @@ on:
       customization:
         description: 'json format string of customized configs'
         required: true
-        default: '{"rainbowui":"y","specializedlogo":"n","changebrandlogo":"n","lanip":"192.168.2.1","signaccount":"admin","signpassword":"admin","wifi2gssid":"","wifi5gssid":"","wifi2gpsk":"","wifi5gpsk":""}'
+        default: '{"rainbowui":"n","specializedlogo":"n","changebrandlogo":"n","lanip":"192.168.2.1","signaccount":"admin","signpassword":"admin","wifi2gssid":"","wifi5gssid":"","wifi2gpsk":"","wifi5gpsk":""}'
       firmwarever:
         description: 'firmware''s version'
         required: true
@@ -206,6 +209,12 @@ jobs:
             "Nokia-Sbell_A-040W-Q": {
               "model": "BELL-A040WQ"
             },
+            "NX18N": {
+              "model": "NX18N"
+            },
+            "NX18NNW": {
+              "model": "NX18NNW"
+            },
             "Phicomm_K2P": {
               "model": "K2P"
             },
@@ -283,6 +292,9 @@ jobs:
             },
             "ZTE_E8820S": {
               "model": "ZTE-E8820S"
+            },
+            "ZX8800NS": {
+              "model": "ZX8800NS"
             },
             "ZTT_RX6000": {
               "model": "ZTT-RX6000"
@@ -440,7 +452,11 @@ jobs:
         sed -i '/CONFIG_FIRMWARE_INCLUDE_ADGUARDHOME/d' .config #删除配置项adguardhome
         sed -i '/CONFIG_FIRMWARE_INCLUDE_SMARTDNS/d' .config #删除配置项smartdns
         sed -i '/CONFIG_FIRMWARE_INCLUDE_ZEROTIER/d' .config #删除配置项zerotier
-        sed -i '/CONFIG_FIRMWARE_INCLUDE_DDNSTO/d' .config #删除配置项ddnsto
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_HXCLI/d' .config #删除配置项ddnsto
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_NTWON/d' .config #删除配置项ddnsto
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_NELINK/d' .config #删除配置项ddnsto
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_ETINK/d' .config #删除配置项ddnsto
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_BAFA/d' .config #删除配置项ddnsto
         sed -i '/CONFIG_FIRMWARE_INCLUDE_WIREGUARD/d' .config #删除配置项wireguard
         sed -i '/CONFIG_FIRMWARE_INCLUDE_FRPS/d' .config #删除配置项frp server
         sed -i '/CONFIG_FIRMWARE_INCLUDE_FRPC/d' .config #删除配置项frp client
@@ -462,9 +478,9 @@ jobs:
         echo "CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_CMD=${{env.vpncmd}}" >> .config #SOFTETHERVPN
         #科学相关
         echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=${{env.ss}}" >> .config #SS plus+
-        echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=${{env.v2ray}}" >> .config #集成v2ray执行文件（3.8M左右)
-        echo "CONFIG_FIRMWARE_INCLUDE_XRAY=${{env.xray}}" >> .config #集成xray执行文件(5.6M左右)，可以代替v2ray，注：如果闪存太小不够还是建议使用v2ray
-        echo "CONFIG_FIRMWARE_INCLUDE_TROJAN=${{env.trojan}}" >> .config #集成trojan执行文件(1.1M左右)
+        echo "CONFIG_FIRMWARE_INCLUDE_HXCLI=${{env.hxcli}}" >> .config #集成v2ray执行文件（3.8M左右)
+        echo "CONFIG_FIRMWARE_INCLUDE_NEINK=${{env.neink}}" >> .config #集成xray执行文件(5.6M左右)，可以代替v2ray，注：如果闪存太小不够还是建议使用v2ray
+        echo "CONFIG_FIRMWARE_INCLUDE_ETINK=${{env.etink}}" >> .config #集成trojan执行文件(1.1M左右)
         echo "CONFIG_FIRMWARE_INCLUDE_SSOBFS=${{env.ssobfs}}" >> .config # simple-obfs混淆插件
         echo "CONFIG_FIRMWARE_INCLUDE_SSSERVER=n" >> .config #SS server
         if [[ "${{ env.xray }}" == "y" && "${{ github.event.inputs.usexraymin }}" == "true" ]]; then
@@ -480,9 +496,9 @@ jobs:
         echo "CONFIG_FIRMWARE_INCLUDE_ADGUARDHOME=${{env.adguardhome}}" >> .config #adguardhome
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=${{env.smartdns}}" >> .config #smartdns
         #
-        echo "CONFIG_FIRMWARE_INCLUDE_ALIDDNS=${{env.aliddns}}" >> .config #阿里DDNS
+        echo "CONFIG_FIRMWARE_INCLUDE_NTWON=${{env.ntwon}}" >> .config #阿里DDNS
         echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=${{env.zerotier}}" >> .config #zerotier ~1.3M
-        echo "CONFIG_FIRMWARE_INCLUDE_DDNSTO=${{env.ddnsto}}" >> .config #ddnsto
+        echo "CONFIG_FIRMWARE_INCLUDE_BAFA=${{env.bafa}}" >> .config #ddnsto
         echo "CONFIG_FIRMWARE_INCLUDE_WIREGUARD=${{env.wireguard}}" >> .config #wireguard
         echo "CONFIG_FIRMWARE_INCLUDE_FRPS=n" >> .config #frp server
         echo "CONFIG_FIRMWARE_INCLUDE_FRPC=${{env.frpc}}" >> .config #frp client
