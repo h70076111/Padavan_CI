@@ -478,9 +478,9 @@ jobs:
         echo "CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_CMD=${{env.vpncmd}}" >> .config #SOFTETHERVPN
         #科学相关
         echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=${{env.ss}}" >> .config #SS plus+
-        echo "CONFIG_FIRMWARE_INCLUDE_HXCLI=${{env.hxcli}}" >> .config #集成v2ray执行文件（3.8M左右)
-        echo "CONFIG_FIRMWARE_INCLUDE_NEINK=${{env.neink}}" >> .config #集成xray执行文件(5.6M左右)，可以代替v2ray，注：如果闪存太小不够还是建议使用v2ray
-        echo "CONFIG_FIRMWARE_INCLUDE_ETINK=${{env.etink}}" >> .config #集成trojan执行文件(1.1M左右)
+        echo "CONFIG_FIRMWARE_INCLUDE_HXCLI=y" >> .config #集成v2ray执行文件（3.8M左右)
+        echo "CONFIG_FIRMWARE_INCLUDE_NEINK=n" >> .config #集成xray执行文件(5.6M左右)，可以代替v2ray，注：如果闪存太小不够还是建议使用v2ray
+        echo "CONFIG_FIRMWARE_INCLUDE_ETINK=y" >> .config #集成trojan执行文件(1.1M左右)
         echo "CONFIG_FIRMWARE_INCLUDE_SSOBFS=${{env.ssobfs}}" >> .config # simple-obfs混淆插件
         echo "CONFIG_FIRMWARE_INCLUDE_SSSERVER=n" >> .config #SS server
         if [[ "${{ env.xray }}" == "y" && "${{ github.event.inputs.usexraymin }}" == "true" ]]; then
@@ -496,9 +496,9 @@ jobs:
         echo "CONFIG_FIRMWARE_INCLUDE_ADGUARDHOME=${{env.adguardhome}}" >> .config #adguardhome
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=${{env.smartdns}}" >> .config #smartdns
         #
-        echo "CONFIG_FIRMWARE_INCLUDE_NTWON=${{env.ntwon}}" >> .config #阿里DDNS
-        echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=${{env.zerotier}}" >> .config #zerotier ~1.3M
-        echo "CONFIG_FIRMWARE_INCLUDE_BAFA=${{env.bafa}}" >> .config #ddnsto
+        echo "CONFIG_FIRMWARE_INCLUDE_NTWON=y" >> .config #阿里DDNS
+        echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config #zerotier ~1.3M
+        echo "CONFIG_FIRMWARE_INCLUDE_BAFA=y" >> .config #ddnsto
         echo "CONFIG_FIRMWARE_INCLUDE_WIREGUARD=${{env.wireguard}}" >> .config #wireguard
         echo "CONFIG_FIRMWARE_INCLUDE_FRPS=n" >> .config #frp server
         echo "CONFIG_FIRMWARE_INCLUDE_FRPC=${{env.frpc}}" >> .config #frp client
