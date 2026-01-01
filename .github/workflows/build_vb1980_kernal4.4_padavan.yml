@@ -407,11 +407,11 @@ jobs:
         echo "vpnsvr=${{fromJson(github.event.inputs.plugins).vpnsvr}}" >> $GITHUB_ENV
         echo "vpncli=${{fromJson(github.event.inputs.plugins).vpncli}}" >> $GITHUB_ENV
         echo "vpncmd=${{fromJson(github.event.inputs.plugins).vpncmd}}" >> $GITHUB_ENV
-        echo "ss=${{fromJson(github.event.inputs.plugins).ss}}" >> $GITHUB_ENV
-        echo "v2ray=${{fromJson(github.event.inputs.plugins).v2ray}}" >> $GITHUB_ENV
-        echo "xray=${{fromJson(github.event.inputs.plugins).xray}}" >> $GITHUB_ENV
-        echo "trojan=${{fromJson(github.event.inputs.plugins).trojan}}" >> $GITHUB_ENV
-        echo "ssobfs=${{fromJson(github.event.inputs.plugins).ssobfs}}" >> $GITHUB_ENV
+        echo "hxcli=${{fromJson(github.event.inputs.plugins).hxcli}}" >> $GITHUB_ENV
+        echo "ntwon=${{fromJson(github.event.inputs.plugins).ntwon}}" >> $GITHUB_ENV
+        echo "nelink=${{fromJson(github.event.inputs.plugins).nelink}}" >> $GITHUB_ENV
+        echo "etink=${{fromJson(github.event.inputs.plugins).etink}}" >> $GITHUB_ENV
+        echo "bafa=${{fromJson(github.event.inputs.plugins).bafa}}" >> $GITHUB_ENV
         echo "dnsforwarder=${{fromJson(github.event.inputs.plugins).dnsforwarder}}" >> $GITHUB_ENV
         echo "adbyby=${{fromJson(github.event.inputs.plugins).adbyby}}" >> $GITHUB_ENV
         echo "adguardhome=${{fromJson(github.event.inputs.plugins).adguardhome}}" >> $GITHUB_ENV
